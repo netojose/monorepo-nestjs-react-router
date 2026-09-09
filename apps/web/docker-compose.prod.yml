@@ -1,0 +1,10 @@
+services:
+  web:
+    build:
+      target: production
+    restart: unless-stopped
+    environment:
+      VITE_WATCH_POLL: !reset null
+    ports: !override
+      - '${APP_EXTERNAL_PORT}:3000'
+    volumes: !reset []

@@ -1,0 +1,14 @@
+services:
+  web:
+    container_name: services_app
+    build:
+      context: ../..
+      dockerfile: apps/web/Dockerfile
+      target: dev
+    environment:
+      VITE_WATCH_POLL: 'true'
+    ports:
+      - '${APP_EXTERNAL_PORT}:5173'
+    volumes:
+      - ../../apps/web:/app/apps/web
+      - /app/apps/web/node_modules

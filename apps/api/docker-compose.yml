@@ -1,0 +1,60 @@
+name: services
+
+services:
+  postgres:
+    # postgis/postgis has no arm64 build; imresamu/postgis is a multi-arch mirror kept in sync with upstream.
+    image: imresamu/postgis:17-3.5
+    container_name: services_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: platform
+      POSTGRES_PASSWORD: platform
+      POSTGRES_DB: platform
+    ports:
+      - '${POSTGRES_EXTERNAL_PORT:-5432}:5432'
+    volumes:
+      - postgres_services_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U platform -d platform']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    container_name: services_redis
+    image: redis:8-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - '${REDIS_EXTERNAL_PORT:-6379}:6379'
+    volumes:
+      - redis_services_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../..
+      dockerfile: apps/api/Dockerfile
+      target: dev
+    container_name: services_api
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      CHOKIDAR_USEPOLLING: 'true'
+    ports:
+      - '${APP_EXTERNAL_PORT:-3000}:3000'
+    volumes:
+      - ../../apps/api:/app/apps/api
+      - /app/apps/api/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_services_data:
+  redis_services_data:

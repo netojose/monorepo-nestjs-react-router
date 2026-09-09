@@ -1,0 +1,8 @@
+services:
+  api:
+    build:
+      target: production
+    restart: unless-stopped
+    environment:
+      CHOKIDAR_USEPOLLING: !reset null
+    volumes: !reset []
