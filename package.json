@@ -22,28 +22,28 @@
     "docker:web:prod:down": "docker compose -f apps/web/docker-compose.yml -f apps/web/docker-compose.prod.yml down"
   },
   "dependencies": {
-    "@bull-board/api": "^9.9.0",
-    "@bull-board/fastify": "^9.9.0",
-    "@bull-board/nestjs": "^9.9.0",
+    "@bull-board/api": "^9.10.1",
+    "@bull-board/fastify": "^9.10.1",
+    "@bull-board/nestjs": "^9.10.1",
     "@fastify/helmet": "^13.1.1",
     "@keyv/redis": "^5.1.6",
     "@nestjs/bullmq": "^12.0.0",
     "@nestjs/cache-manager": "^12.0.0",
-    "@nestjs/event-emitter": "^12.0.0",
-    "@nestjs/platform-fastify": "^12.0.1",
+    "@nestjs/event-emitter": "^12.0.1",
+    "@nestjs/platform-fastify": "^12.0.4",
     "@nestjs/swagger": "^12.0.1",
-    "@nestjs/throttler": "^6.5.0",
-    "bullmq": "^6.3.4",
+    "@nestjs/throttler": "^6.7.0",
+    "bullmq": "^6.3.8",
     "cache-manager": "^7.2.9",
     "cacheable": "^2.5.0",
     "helmet": "^8.3.0",
     "keyv": "^5.6.0",
     "radash": "^12.1.1",
-    "zod": "^4.6.0"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "oxfmt": "^0.67.0",
-    "oxlint": "^1.82.0"
+    "oxfmt": "^0.70.0",
+    "oxlint": "^1.85.0"
   },
   "lint-staged": {
     "*": "oxfmt --no-error-on-unmatched-pattern"
@@ -51,5 +51,5 @@
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "pnpm@10.22.0"
+  "packageManager": "pnpm@12.5.1"
 }
