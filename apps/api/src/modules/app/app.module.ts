@@ -16,6 +16,7 @@ import { Keyv } from 'keyv'
 import mikroOrmConfig from '../../mikro-orm.config.js'
 import { bullBoardAuthMiddleware } from '../../utils/bull-board-auth-middleware.js'
 import { envSchema } from '../../utils/config-validation-schema.js'
+import { UserModule } from '../user/user.module.js'
 
 @Module({
   imports: [
@@ -72,7 +73,8 @@ import { envSchema } from '../../utils/config-validation-schema.js'
       ]
     }),
     EventEmitterModule.forRoot(),
-    MikroOrmModule.forRoot(mikroOrmConfig)
+    MikroOrmModule.forRoot(mikroOrmConfig),
+    UserModule
   ],
   providers: []
 })

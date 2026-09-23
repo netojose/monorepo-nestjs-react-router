@@ -2,7 +2,7 @@ import helmet from '@fastify/helmet'
 import { StandardSchemaValidationPipe, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import type { NestFastifyApplication } from '@nestjs/platform-fastify'
-import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger'
+import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions, SwaggerDocumentOptions } from '@nestjs/swagger'
 
 import * as packageJson from '../../package.json' with { type: 'json' }
 import { validationExceptionFactory } from './validation-exception-factory.js'
@@ -15,20 +15,31 @@ export function configSwagger(app: NestFastifyApplication, uri: string): void {
     return
   }
 
+  const { description, version } = packageJson.default
+
   const config = new DocumentBuilder()
-    .setTitle('PearlFresh API')
-    .setDescription('PearlFresh REST API specification')
-    .setVersion(packageJson.default.version)
+    .setTitle(description)
+    .setDescription(`${description} REST API specification`)
+    .setVersion(version)
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'JWT')
     .build()
 
-  const documentFactory = () => SwaggerModule.createDocument(app, config)
+  const options: SwaggerDocumentOptions = {
+    operationIdFactory: (controllerKey: string, methodKey: string) => {
+      const cnt = controllerKey.replace('Controller', '')
+      const controller = cnt.charAt(0).toLowerCase() + cnt.slice(1)
+      const action = methodKey.charAt(0).toUpperCase() + methodKey.slice(1)
+      return `${controller}${action}`
+    }
+  }
+
+  const documentFactory = () => SwaggerModule.createDocument(app, config, options)
 
   const customOptions: SwaggerCustomOptions = {
     swaggerOptions: {
       persistAuthorization: true
     },
-    customSiteTitle: 'PearlFresh API'
+    customSiteTitle: description
   }
 
   SwaggerModule.setup(uri, app, documentFactory, customOptions)

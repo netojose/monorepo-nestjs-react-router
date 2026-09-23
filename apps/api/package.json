@@ -1,8 +1,8 @@
 {
-  "name": "api",
+  "name": "namespace-api",
   "version": "0.0.1",
   "private": true,
-  "description": "",
+  "description": "Application name",
   "license": "UNLICENSED",
   "author": "",
   "type": "module",
