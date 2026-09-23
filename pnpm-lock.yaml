@@ -303,9 +303,6 @@ importers:
       oxlint:
         specifier: ^1.85.0
         version: 1.85.0
-      prettier:
-        specifier: ^3.9.8
-        version: 3.9.8
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -6052,7 +6049,8 @@ snapshots:
 
   postgres-interval@4.1.0: {}
 
-  prettier@3.9.8: {}
+  prettier@3.9.8:
+    optional: true
 
   process-warning@4.0.1: {}
 
