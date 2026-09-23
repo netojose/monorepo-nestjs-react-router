@@ -53,7 +53,7 @@ services:
       - /app/apps/api/node_modules
     depends_on:
       postgres:
-        condition: namespace_healthy
+        condition: service_healthy
 
 volumes:
   postgres_namespace_data:
