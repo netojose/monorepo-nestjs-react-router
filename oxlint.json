@@ -3,7 +3,7 @@
   "rules": {
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-floating-promises": "error",
-    "eslint/no-unused-vars": "error"
+    "no-unused-vars": "error"
   },
   "env": {
     "node": true

@@ -1,6 +1,8 @@
+name: namespace_app
+
 services:
   web:
-    container_name: services_app
+    container_name: namespace_app
     build:
       context: ../..
       dockerfile: apps/web/Dockerfile

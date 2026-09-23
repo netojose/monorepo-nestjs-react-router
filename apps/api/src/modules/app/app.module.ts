@@ -8,17 +8,14 @@ import { BullModule } from '@nestjs/bullmq'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { APP_GUARD } from '@nestjs/core'
 import { EventEmitterModule } from '@nestjs/event-emitter'
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
+import { ThrottlerModule } from '@nestjs/throttler'
 import { KeyvCacheableMemory } from 'cacheable'
 import { Keyv } from 'keyv'
 
 import mikroOrmConfig from '../../mikro-orm.config.js'
 import { bullBoardAuthMiddleware } from '../../utils/bull-board-auth-middleware.js'
 import { envSchema } from '../../utils/config-validation-schema.js'
-import { AppController } from './app.controller.js'
-import { AppService } from './app.service.js'
 
 @Module({
   imports: [
@@ -77,13 +74,6 @@ import { AppService } from './app.service.js'
     EventEmitterModule.forRoot(),
     MikroOrmModule.forRoot(mikroOrmConfig)
   ],
-  controllers: [AppController],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: ThrottlerGuard
-    },
-    AppService
-  ]
+  providers: []
 })
 export class AppModule {}
